@@ -14,7 +14,7 @@ import Insights from "./pages/Insights";
 import Onboarding from "./pages/Onboarding";
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
-import Upgrade from "./pages/Upgrade";
+import { Upgrade } from "./pages/Upgrade";
 import Alerts from "./pages/Alerts";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -26,8 +26,8 @@ const App = () => (
     <AuthProvider>
       <ThemeProvider
         attribute="class"
-        defaultTheme="system"
-        enableSystem
+        defaultTheme="light"
+        enableSystem={false}
         disableTransitionOnChange
       >
         <TooltipProvider>
