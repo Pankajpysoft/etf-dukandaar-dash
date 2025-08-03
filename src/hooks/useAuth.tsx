@@ -1,10 +1,16 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+
+interface MockUser {
+  id: string;
+  email: string;
+  user_metadata: {
+    full_name: string;
+  };
+}
 
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: MockUser | null;
+  session: any;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
@@ -15,66 +21,71 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<MockUser | null>(null);
+  const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }
-    );
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+    // Simulate loading and set hardcoded user
+    setTimeout(() => {
+      const mockUser: MockUser = {
+        id: 'mock-user-123',
+        email: 'demo@portfoliotracker.com',
+        user_metadata: {
+          full_name: 'Demo User'
+        }
+      };
+      
+      const mockSession = {
+        user: mockUser,
+        access_token: 'mock-token',
+        refresh_token: 'mock-refresh'
+      };
+      
+      setUser(mockUser);
+      setSession(mockSession);
       setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    }, 1000);
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    const mockUser: MockUser = {
+      id: 'mock-user-123',
       email,
-      password,
-    });
-    return { error };
+      user_metadata: {
+        full_name: 'Demo User'
+      }
+    };
+    
+    const mockSession = {
+      user: mockUser,
+      access_token: 'mock-token',
+      refresh_token: 'mock-refresh'
+    };
+    
+    setUser(mockUser);
+    setSession(mockSession);
+    return { error: null };
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          full_name: fullName,
-        }
-      }
-    });
-    return { error };
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return { error: null };
   };
 
   const signInWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/`
-      }
-    });
-    return { error };
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return { error: null };
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    setUser(null);
+    setSession(null);
     window.location.href = '/auth';
   };
 

@@ -23,7 +23,7 @@ import {
   XCircle
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
+
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -55,14 +55,37 @@ export default function Reports() {
 
   const fetchReports = async () => {
     try {
-      const { data, error } = await supabase
-        .from('reports')
-        .select('*')
-        .eq('user_id', user?.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setReports((data || []) as Report[]);
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const mockReports: Report[] = [
+        {
+          id: 'report-1',
+          title: 'Monthly Portfolio Review - December 2024',
+          type: 'portfolio',
+          status: 'completed',
+          preview_data: generateMockPortfolioData(),
+          created_at: new Date(Date.now() - 86400000).toISOString() // 1 day ago
+        },
+        {
+          id: 'report-2',
+          title: 'Q4 Performance Analysis',
+          type: 'performance',
+          status: 'completed',
+          preview_data: generateMockPortfolioData(),
+          created_at: new Date(Date.now() - 259200000).toISOString() // 3 days ago
+        },
+        {
+          id: 'report-3',
+          title: 'Risk Assessment Report',
+          type: 'custom',
+          status: 'generating',
+          preview_data: null,
+          created_at: new Date().toISOString()
+        }
+      ];
+      
+      setReports(mockReports);
     } catch (error: any) {
       toast.error('Failed to fetch reports');
     }
@@ -104,42 +127,38 @@ export default function Reports() {
 
     setIsGenerating(true);
     try {
-      // Create report record
-      const { data: reportData, error } = await supabase
-        .from('reports')
-        .insert([{
-          user_id: user?.id,
-          title: reportTitle,
-          type: reportType as 'portfolio' | 'performance' | 'custom',
-          status: 'generating',
-          preview_data: generateMockPortfolioData()
-        }])
-        .select()
-        .single();
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const newReport: Report = {
+        id: `report-${Date.now()}`,
+        title: reportTitle,
+        type: reportType as 'portfolio' | 'performance' | 'custom',
+        status: 'generating',
+        preview_data: generateMockPortfolioData(),
+        created_at: new Date().toISOString()
+      };
 
-      if (error) throw error;
+      // Add to local state
+      setReports(prev => [newReport, ...prev]);
 
       // Simulate report generation
-      setTimeout(async () => {
-        try {
-          await supabase
-            .from('reports')
-            .update({ status: 'completed' })
-            .eq('id', reportData.id);
-          
-          fetchReports();
-          toast.success('Report generated successfully!');
-        } catch (error) {
-          toast.error('Failed to update report status');
-        }
+      setTimeout(() => {
+        setReports(prev => 
+          prev.map(report => 
+            report.id === newReport.id 
+              ? { ...report, status: 'completed' as const }
+              : report
+          )
+        );
+        toast.success('Report generated successfully!');
       }, 3000);
 
       setIsDialogOpen(false);
       setReportTitle('');
-      fetchReports();
       
     } catch (error: any) {
-      toast.error(error.message || 'Failed to generate report');
+      toast.error('Failed to generate report');
     } finally {
       setIsGenerating(false);
     }

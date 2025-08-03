@@ -12,7 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Crown, Moon, Sun, Monitor, Bell, Mail, MessageSquare, Download, FileText, Users } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
+
 import { toast } from 'sonner';
 import { useTheme } from 'next-themes';
 
@@ -58,80 +58,70 @@ export default function Settings() {
   }, [user]);
 
   const fetchProfile = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', user?.id)
-        .single();
-
-      if (data) {
-        setProfile(data);
-        profileForm.reset({
-          fullName: data.full_name || '',
-          email: data.email || '',
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching profile:', error);
-    }
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const mockProfile = {
+      id: 'mock-profile-123',
+      user_id: user?.id,
+      full_name: 'Demo User',
+      email: 'demo@portfoliotracker.com',
+      is_premium: true,
+      avatar_url: null,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    
+    setProfile(mockProfile);
+    profileForm.reset({
+      fullName: mockProfile.full_name || '',
+      email: mockProfile.email || '',
+    });
   };
 
   const fetchPreferences = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('user_preferences')
-        .select('*')
-        .eq('user_id', user?.id)
-        .single();
-
-      if (data) {
-        setPreferences(data);
-        preferencesForm.reset({
-          theme: (data.theme as 'light' | 'dark' | 'system') || 'system',
-          notificationsEnabled: data.notifications_enabled,
-          emailNotifications: data.email_notifications,
-          telegramNotifications: data.telegram_notifications,
-          telegramChatId: data.telegram_chat_id || '',
-        });
-      }
-    } catch (error) {
-      // If no preferences exist, create default ones
-      const defaultPrefs = {
-        user_id: user?.id,
-        theme: 'system',
-        notifications_enabled: true,
-        email_notifications: true,
-        telegram_notifications: false,
-      };
-
-      const { error: insertError } = await supabase
-        .from('user_preferences')
-        .insert([defaultPrefs]);
-
-      if (!insertError) {
-        setPreferences(defaultPrefs);
-      }
-    }
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const mockPreferences = {
+      id: 'mock-prefs-123',
+      user_id: user?.id,
+      theme: 'system',
+      notifications_enabled: true,
+      email_notifications: true,
+      telegram_notifications: false,
+      telegram_chat_id: '',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    
+    setPreferences(mockPreferences);
+    preferencesForm.reset({
+      theme: (mockPreferences.theme as 'light' | 'dark' | 'system') || 'system',
+      notificationsEnabled: mockPreferences.notifications_enabled,
+      emailNotifications: mockPreferences.email_notifications,
+      telegramNotifications: mockPreferences.telegram_notifications,
+      telegramChatId: mockPreferences.telegram_chat_id || '',
+    });
   };
 
   const onUpdateProfile = async (values: z.infer<typeof profileSchema>) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          full_name: values.fullName,
-          email: values.email,
-        })
-        .eq('user_id', user?.id);
-
-      if (error) throw error;
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Update local state
+      setProfile({
+        ...profile,
+        full_name: values.fullName,
+        email: values.email,
+        updated_at: new Date().toISOString()
+      });
       
       toast.success('Profile updated successfully!');
-      fetchProfile();
     } catch (error: any) {
-      toast.error(error.message || 'Failed to update profile');
+      toast.error('Failed to update profile');
     } finally {
       setIsLoading(false);
     }
@@ -140,24 +130,24 @@ export default function Settings() {
   const onUpdatePreferences = async (values: z.infer<typeof preferencesSchema>) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase
-        .from('user_preferences')
-        .upsert({
-          user_id: user?.id,
-          theme: values.theme,
-          notifications_enabled: values.notificationsEnabled,
-          email_notifications: values.emailNotifications,
-          telegram_notifications: values.telegramNotifications,
-          telegram_chat_id: values.telegramChatId,
-        });
-
-      if (error) throw error;
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Update local state
+      setPreferences({
+        ...preferences,
+        theme: values.theme,
+        notifications_enabled: values.notificationsEnabled,
+        email_notifications: values.emailNotifications,
+        telegram_notifications: values.telegramNotifications,
+        telegram_chat_id: values.telegramChatId,
+        updated_at: new Date().toISOString()
+      });
       
       setTheme(values.theme);
       toast.success('Preferences updated successfully!');
-      fetchPreferences();
     } catch (error: any) {
-      toast.error(error.message || 'Failed to update preferences');
+      toast.error('Failed to update preferences');
     } finally {
       setIsLoading(false);
     }

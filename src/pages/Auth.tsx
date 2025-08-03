@@ -38,6 +38,7 @@ export default function Auth() {
     resolver: zodResolver(signUpSchema),
   });
 
+  // Always redirect to dashboard since user is hardcoded
   if (user) {
     return <Navigate to="/" replace />;
   }
