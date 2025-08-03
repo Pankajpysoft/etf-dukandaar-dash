@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
 import Index from "./pages/Index";
 import Portfolio from "./pages/Portfolio";
+import Screener from "./pages/Screener";
+import Insights from "./pages/Insights";
 import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/" element={<Layout />}>
             <Route index element={<Index />} />
             <Route path="portfolio" element={<Portfolio />} />
+            <Route path="screener" element={<Screener />} />
+            <Route path="insights" element={<Insights />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           </Route>
           <Route path="*" element={<NotFound />} />
