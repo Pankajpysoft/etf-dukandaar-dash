@@ -71,13 +71,13 @@ function getAlertColor(type: Alert["type"]) {
 
 export function RecentAlerts() {
   return (
-    <Card className="bg-gradient-card shadow-lg">
+    <Card className="bg-gradient-card shadow-primary animate-fade-in">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-foreground flex items-center">
-          <Bell className="w-5 h-5 mr-2" />
+        <CardTitle className="text-foreground flex items-center animate-float">
+          <Bell className="w-5 h-5 mr-2 animate-glow-pulse" />
           Recent Alerts
         </CardTitle>
-        <Badge variant="secondary" className="text-xs">
+        <Badge variant="secondary" className="text-xs shadow-accent animate-scale-in">
           {alerts.length} new
         </Badge>
       </CardHeader>
@@ -88,10 +88,10 @@ export function RecentAlerts() {
             return (
               <div
                 key={alert.id}
-                className="flex items-center justify-between p-3 bg-background rounded-lg border border-border hover:shadow-md transition-shadow"
+                className="flex items-center justify-between p-3 bg-gradient-card rounded-lg border border-border hover:shadow-primary hover:scale-105 transition-all duration-300 animate-scale-in"
               >
                 <div className="flex items-center space-x-3">
-                  <div className={cn("p-2 rounded-full bg-secondary", getAlertColor(alert.type))}>
+                  <div className={cn("p-2 rounded-full bg-gradient-secondary shadow-accent animate-glow-pulse", getAlertColor(alert.type))}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <div>

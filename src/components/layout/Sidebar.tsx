@@ -20,11 +20,9 @@ import { cn } from "@/lib/utils";
 const menuItems = [
   { title: "Dashboard", url: "/", icon: BarChart3 },
   { title: "Portfolio", url: "/portfolio", icon: TrendingUp },
-  { title: "Watchlist", url: "/watchlist", icon: Eye },
   { title: "Screener", url: "/screener", icon: Search },
   { title: "Insights", url: "/insights", icon: PieChart },
   { title: "Reports", url: "/reports", icon: FileText },
-  { title: "Alerts", url: "/alerts", icon: Bell },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
@@ -35,7 +33,7 @@ export function Sidebar() {
   return (
     <div
       className={cn(
-        "h-screen bg-card border-r border-border transition-all duration-300 flex flex-col",
+        "h-screen bg-gradient-card border-r border-border transition-all duration-300 flex flex-col shadow-lg",
         collapsed ? "w-16" : "w-64"
       )}
     >
@@ -43,7 +41,7 @@ export function Sidebar() {
       <div className="p-4 border-b border-border flex items-center justify-between">
         {!collapsed && (
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow animate-glow-pulse">
               <TrendingUp className="w-5 h-5 text-primary-foreground" />
             </div>
             <div>
@@ -76,21 +74,21 @@ export function Sidebar() {
                 end={item.url === "/"}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-colors group relative",
+                    "flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-300 group relative hover:scale-105",
                     isActive
-                      ? "bg-primary text-primary-foreground shadow-md"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                      ? "bg-gradient-primary text-primary-foreground shadow-primary animate-scale-in"
+                      : "text-muted-foreground hover:text-foreground hover:bg-gradient-hover"
                   )
                 }
               >
                 <item.icon className="w-5 h-5 flex-shrink-0" />
                 {!collapsed && <span className="font-medium">{item.title}</span>}
                 {collapsed && (
-                  <div className="absolute left-full ml-2 px-2 py-1 bg-popover border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                    <span className="text-sm font-medium text-popover-foreground whitespace-nowrap">
-                      {item.title}
-                    </span>
-                  </div>
+                   <div className="absolute left-full ml-2 px-2 py-1 bg-popover border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 animate-scale-in z-50">
+                     <span className="text-sm font-medium text-popover-foreground whitespace-nowrap">
+                       {item.title}
+                     </span>
+                   </div>
                 )}
               </NavLink>
             </li>
