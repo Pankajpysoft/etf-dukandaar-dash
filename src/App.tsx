@@ -15,6 +15,7 @@ import Onboarding from "./pages/Onboarding";
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
 import Upgrade from "./pages/Upgrade";
+import Alerts from "./pages/Alerts";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="portfolio" element={<Portfolio />} />
                 <Route path="screener" element={<Screener />} />
                 <Route path="insights" element={<Insights />} />
+                <Route path="alerts" element={<Alerts />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="reports" element={<Reports />} />
                 <Route path="upgrade" element={<Upgrade />} />

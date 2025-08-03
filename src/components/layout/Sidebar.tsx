@@ -24,6 +24,7 @@ const menuItems = [
   { title: "Portfolio", url: "/portfolio", icon: TrendingUp },
   { title: "Screener", url: "/screener", icon: Search },
   { title: "Insights", url: "/insights", icon: PieChart },
+  { title: "Alerts", url: "/alerts", icon: Bell },
   { title: "Reports", url: "/reports", icon: FileText },
   { title: "Settings", url: "/settings", icon: Settings },
 ];

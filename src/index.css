@@ -51,6 +51,8 @@ All colors MUST be HSL.
     --gradient-success: linear-gradient(135deg, hsl(150 85% 55%) 0%, hsl(160 90% 45%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(240 20% 98%) 50%, hsl(270 15% 96%) 100%);
     --gradient-hover: linear-gradient(135deg, hsl(270 85% 85%) 0%, hsl(280 75% 80%) 100%);
+    --gradient-cyber: linear-gradient(135deg, hsl(195 100% 50%) 0%, hsl(280 100% 70%) 50%, hsl(340 100% 60%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(120 100% 50%) 0%, hsl(180 100% 50%) 50%, hsl(240 100% 70%) 100%);
     
     --shadow-sm: 0 2px 4px 0 hsl(270 95% 75% / 0.1);
     --shadow-md: 0 6px 12px -2px hsl(270 95% 75% / 0.15), 0 4px 8px -2px hsl(270 95% 75% / 0.1);
@@ -58,6 +60,8 @@ All colors MUST be HSL.
     --shadow-glow: 0 0 30px hsl(270 95% 75% / 0.25);
     --shadow-primary: 0 10px 30px -10px hsl(270 95% 75% / 0.3);
     --shadow-accent: 0 8px 25px -8px hsl(15 100% 70% / 0.3);
+    --shadow-neon: 0 0 40px hsl(195 100% 50% / 0.4), 0 0 60px hsl(280 100% 70% / 0.3);
+    --shadow-cyber: 0 0 20px hsl(195 100% 50% / 0.5);
 
     --radius: 0.75rem;
 
@@ -122,6 +126,8 @@ All colors MUST be HSL.
     --gradient-success: linear-gradient(135deg, hsl(150 75% 60%) 0%, hsl(160 80% 50%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(240 15% 12%) 0%, hsl(245 18% 15%) 50%, hsl(270 20% 18%) 100%);
     --gradient-hover: linear-gradient(135deg, hsl(270 75% 70%) 0%, hsl(280 65% 65%) 100%);
+    --gradient-cyber: linear-gradient(135deg, hsl(195 100% 40%) 0%, hsl(280 100% 60%) 50%, hsl(340 100% 50%) 100%);
+    --gradient-neon: linear-gradient(135deg, hsl(120 100% 40%) 0%, hsl(180 100% 40%) 50%, hsl(240 100% 60%) 100%);
     
     --shadow-sm: 0 2px 4px 0 hsl(270 85% 80% / 0.1);
     --shadow-md: 0 6px 12px -2px hsl(270 85% 80% / 0.15), 0 4px 8px -2px hsl(270 85% 80% / 0.1);
@@ -129,6 +135,8 @@ All colors MUST be HSL.
     --shadow-glow: 0 0 30px hsl(270 85% 80% / 0.25);
     --shadow-primary: 0 10px 30px -10px hsl(270 85% 80% / 0.3);
     --shadow-accent: 0 8px 25px -8px hsl(15 90% 75% / 0.3);
+    --shadow-neon: 0 0 40px hsl(195 100% 40% / 0.4), 0 0 60px hsl(280 100% 60% / 0.3);
+    --shadow-cyber: 0 0 20px hsl(195 100% 40% / 0.5);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -147,5 +155,89 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Custom Animation Classes */
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite alternate;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+  
+  .animate-scale-hover {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .animate-scale-hover:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Gradient Text */
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-cyber {
+    background: var(--gradient-cyber);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Glass Effect */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Neon Effects */
+  .neon-border {
+    border: 2px solid hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+  
+  .neon-glow {
+    filter: drop-shadow(0 0 10px hsl(var(--primary) / 0.7));
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  100% {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.6);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

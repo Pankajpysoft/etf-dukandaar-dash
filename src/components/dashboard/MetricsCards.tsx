@@ -12,20 +12,24 @@ interface MetricCardProps {
 
 function MetricCard({ title, value, change, isPositive, icon: Icon }: MetricCardProps) {
   return (
-    <Card className="bg-gradient-card shadow-lg hover:shadow-glow transition-all duration-300">
+    <Card className="bg-gradient-card shadow-lg hover:shadow-glow transition-all duration-300 border border-primary/20 animate-scale-hover group">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+        <CardTitle className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
           {title}
         </CardTitle>
-        <Icon className="h-4 w-4 text-muted-foreground" />
+        <div className="p-2 rounded-lg bg-gradient-hover group-hover:bg-gradient-primary transition-all duration-300">
+          <Icon className="h-4 w-4 text-muted-foreground group-hover:text-primary-foreground transition-colors" />
+        </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-foreground">{value}</div>
+        <div className="text-2xl font-bold text-foreground group-hover:text-gradient-primary transition-all duration-300">
+          {value}
+        </div>
         <div className="flex items-center mt-1">
           {isPositive ? (
-            <TrendingUp className="h-4 w-4 text-success mr-1" />
+            <TrendingUp className="h-4 w-4 text-success mr-1 animate-pulse" />
           ) : (
-            <TrendingDown className="h-4 w-4 text-destructive mr-1" />
+            <TrendingDown className="h-4 w-4 text-destructive mr-1 animate-pulse" />
           )}
           <span
             className={cn(
@@ -77,7 +81,13 @@ export function MetricsCards() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {metrics.map((metric, index) => (
-        <MetricCard key={index} {...metric} />
+        <div 
+          key={index} 
+          className="animate-slide-up" 
+          style={{ animationDelay: `${index * 100}ms` }}
+        >
+          <MetricCard {...metric} />
+        </div>
       ))}
     </div>
   );

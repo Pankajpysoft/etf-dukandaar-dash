@@ -141,21 +141,21 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 animate-slide-up">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-6 rounded-xl bg-gradient-card border border-primary/20 shadow-lg">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">My Portfolio</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-gradient-primary">My Portfolio</h1>
+          <p className="text-muted-foreground mt-1 text-lg">
             Manage and track your stock investments
           </p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="hover:bg-gradient-hover transition-all duration-300">
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
-          <Button size="sm" className="bg-gradient-primary">
+          <Button size="sm" className="bg-gradient-primary hover:bg-gradient-primary/90 shadow-glow animate-glow-pulse">
             <Plus className="w-4 h-4 mr-2" />
             Add Stock
           </Button>
@@ -164,7 +164,7 @@ export default function Portfolio() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="bg-gradient-card shadow-lg">
+        <Card className="bg-gradient-card shadow-lg border border-primary/20 hover:shadow-glow transition-all duration-300 animate-scale-hover">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -173,14 +173,14 @@ export default function Portfolio() {
                   {formatCurrency(totalInvestment)}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-primary/20 rounded-lg flex items-center justify-center animate-float">
                 <TrendingUp className="w-6 h-6 text-primary" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card shadow-lg">
+        <Card className="bg-gradient-card shadow-lg border border-primary/20 hover:shadow-glow transition-all duration-300 animate-scale-hover">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -189,14 +189,14 @@ export default function Portfolio() {
                   {formatCurrency(totalCurrentValue)}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-info/10 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-cyber/20 rounded-lg flex items-center justify-center animate-float" style={{ animationDelay: '0.5s' }}>
                 <TrendingUp className="w-6 h-6 text-info" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card shadow-lg">
+        <Card className="bg-gradient-card shadow-lg border border-primary/20 hover:shadow-glow transition-all duration-300 animate-scale-hover">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -209,20 +209,20 @@ export default function Portfolio() {
                 </p>
               </div>
               <div className={cn(
-                "w-12 h-12 rounded-lg flex items-center justify-center",
-                totalGainLoss >= 0 ? "bg-success/10" : "bg-destructive/10"
-              )}>
+                "w-12 h-12 rounded-lg flex items-center justify-center animate-float",
+                totalGainLoss >= 0 ? "bg-gradient-success/20" : "bg-destructive/10"
+              )} style={{ animationDelay: '1s' }}>
                 {totalGainLoss >= 0 ? (
-                  <TrendingUp className="w-6 h-6 text-success" />
+                  <TrendingUp className="w-6 h-6 text-success animate-pulse" />
                 ) : (
-                  <TrendingDown className="w-6 h-6 text-destructive" />
+                  <TrendingDown className="w-6 h-6 text-destructive animate-pulse" />
                 )}
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card shadow-lg">
+        <Card className="bg-gradient-card shadow-lg border border-primary/20 hover:shadow-glow transition-all duration-300 animate-scale-hover">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -235,13 +235,13 @@ export default function Portfolio() {
                 </p>
               </div>
               <div className={cn(
-                "w-12 h-12 rounded-lg flex items-center justify-center",
-                totalGainLossPercent >= 0 ? "bg-success/10" : "bg-destructive/10"
-              )}>
+                "w-12 h-12 rounded-lg flex items-center justify-center animate-float",
+                totalGainLossPercent >= 0 ? "bg-gradient-success/20" : "bg-destructive/10"
+              )} style={{ animationDelay: '1.5s' }}>
                 {totalGainLossPercent >= 0 ? (
-                  <TrendingUp className="w-6 h-6 text-success" />
+                  <TrendingUp className="w-6 h-6 text-success animate-pulse" />
                 ) : (
-                  <TrendingDown className="w-6 h-6 text-destructive" />
+                  <TrendingDown className="w-6 h-6 text-destructive animate-pulse" />
                 )}
               </div>
             </div>
@@ -250,9 +250,12 @@ export default function Portfolio() {
       </div>
 
       {/* Filters and Search */}
-      <Card className="bg-card shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-foreground">Holdings ({filteredHoldings.length})</CardTitle>
+      <Card className="bg-gradient-card shadow-lg border border-primary/20 hover:shadow-glow transition-all duration-300">
+        <CardHeader className="bg-gradient-hover/30 rounded-t-lg">
+          <CardTitle className="text-foreground flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-primary" />
+            Holdings ({filteredHoldings.length})
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col md:flex-row gap-4 mb-6">
