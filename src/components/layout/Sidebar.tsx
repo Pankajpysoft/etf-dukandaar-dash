@@ -11,7 +11,9 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  LogOut,
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -28,6 +30,7 @@ const menuItems = [
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <div
@@ -96,22 +99,47 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-border">
+      <div className="p-4 border-t border-border space-y-2">
         {!collapsed ? (
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
-              <span className="text-sm font-medium text-secondary-foreground">JD</span>
+          <>
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
+                <span className="text-sm font-medium text-secondary-foreground">
+                  {user?.email?.[0]?.toUpperCase() || 'U'}
+                </span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">
+                  {user?.user_metadata?.full_name || user?.email}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">Free Plan</p>
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">John Doe</p>
-              <p className="text-xs text-muted-foreground truncate">Premium Plan</p>
-            </div>
-          </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={signOut}
+              className="w-full justify-start text-muted-foreground hover:text-foreground"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </>
         ) : (
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center space-y-2">
             <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
-              <span className="text-sm font-medium text-secondary-foreground">JD</span>
+              <span className="text-sm font-medium text-secondary-foreground">
+                {user?.email?.[0]?.toUpperCase() || 'U'}
+              </span>
             </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={signOut}
+              className="w-8 h-8"
+            >
+              <LogOut className="w-4 h-4" />
+            </Button>
           </div>
         )}
       </div>
