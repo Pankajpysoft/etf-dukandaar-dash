@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { PremiumBadge } from "@/components/ui/premium-badge";
 import { 
   Table, 
   TableBody, 
@@ -20,6 +21,7 @@ interface FilterChip {
   label: string;
   active: boolean;
   description: string;
+  premium?: boolean;
 }
 
 interface StockResult {
@@ -47,6 +49,11 @@ const filterChips: FilterChip[] = [
   { id: "dividend-yield", label: "High Dividend", active: false, description: "Dividend Yield > 3%" },
   { id: "momentum", label: "Momentum", active: false, description: "Strong price momentum" },
   { id: "quality", label: "Quality", active: false, description: "High quality fundamentals" },
+  // Premium filters
+  { id: "ema288", label: "288 EMA Signal", active: false, description: "Price above 288 EMA", premium: true },
+  { id: "golden", label: "Golden Crossover", active: false, description: "50 MA crosses 200 MA", premium: true },
+  { id: "rsi", label: "RSI Oversold", active: false, description: "RSI < 30", premium: true },
+  { id: "volume", label: "Volume Breakout", active: false, description: "Volume > 2x average", premium: true },
 ];
 
 const mockResults: StockResult[] = [
@@ -184,19 +191,28 @@ export default function Screener() {
         <CardContent>
           <div className="flex flex-wrap gap-3">
             {filters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => toggleFilter(filter.id)}
-                className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                  "border-2 hover:scale-105",
-                  filter.active
-                    ? "bg-primary text-primary-foreground border-primary shadow-md"
-                    : "bg-background border-border hover:border-primary/50"
+              <div key={filter.id} className="relative">
+                <button
+                  onClick={() => !filter.premium && toggleFilter(filter.id)}
+                  disabled={filter.premium}
+                  className={cn(
+                    "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+                    "border-2 hover:scale-105 flex items-center gap-2",
+                    filter.active
+                      ? "bg-primary text-primary-foreground border-primary shadow-md"
+                      : "bg-background border-border hover:border-primary/50",
+                    filter.premium && "opacity-50 cursor-not-allowed"
+                  )}
+                >
+                  {filter.label}
+                  {filter.premium && <PremiumBadge variant="locked" />}
+                </button>
+                {filter.premium && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-background/80 rounded-full backdrop-blur-sm">
+                    <span className="text-xs text-muted-foreground">🔒 Premium</span>
+                  </div>
                 )}
-              >
-                {filter.label}
-              </button>
+              </div>
             ))}
           </div>
           

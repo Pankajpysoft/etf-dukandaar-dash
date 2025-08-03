@@ -14,6 +14,7 @@ import Insights from "./pages/Insights";
 import Onboarding from "./pages/Onboarding";
 import Settings from "./pages/Settings";
 import Reports from "./pages/Reports";
+import Upgrade from "./pages/Upgrade";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -46,6 +47,7 @@ const App = () => (
                 <Route path="insights" element={<Insights />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="reports" element={<Reports />} />
+                <Route path="upgrade" element={<Upgrade />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               </Route>
               <Route path="*" element={<NotFound />} />

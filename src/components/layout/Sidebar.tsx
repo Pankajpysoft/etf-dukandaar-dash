@@ -12,9 +12,11 @@ import {
   ChevronLeft,
   ChevronRight,
   LogOut,
+  Crown,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
@@ -65,7 +67,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4">
+      <nav className="flex-1 p-4 space-y-4">
         <ul className="space-y-2">
           {menuItems.map((item) => (
             <li key={item.title}>
@@ -94,6 +96,29 @@ export function Sidebar() {
             </li>
           ))}
         </ul>
+
+        {/* Premium Upgrade Card */}
+        {!collapsed && (
+          <Card className="bg-gradient-primary text-primary-foreground shadow-glow animate-glow-pulse">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Crown className="h-5 w-5" />
+                <span className="font-semibold">Go Premium</span>
+              </div>
+              <p className="text-xs text-primary-foreground/80 mb-3">
+                Unlock AI insights, alerts & advanced features
+              </p>
+              <NavLink to="/upgrade">
+                <Button 
+                  size="sm" 
+                  className="w-full bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-medium"
+                >
+                  ₹99/month
+                </Button>
+              </NavLink>
+            </CardContent>
+          </Card>
+        )}
       </nav>
 
       {/* Footer */}
