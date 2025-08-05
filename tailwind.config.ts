@@ -82,6 +82,8 @@ export default {
 				'gradient-success': 'var(--gradient-success)',
 				'gradient-card': 'var(--gradient-card)',
 				'gradient-hover': 'var(--gradient-hover)',
+				'gradient-accent': 'var(--gradient-accent)',
+				'gradient-soft': 'var(--gradient-soft)',
 			},
 			boxShadow: {
 				'sm': 'var(--shadow-sm)',
@@ -90,6 +92,8 @@ export default {
 				'glow': 'var(--shadow-glow)',
 				'primary': 'var(--shadow-primary)',
 				'accent': 'var(--shadow-accent)',
+				'soft': 'var(--shadow-soft)',
+				'elegant': 'var(--shadow-elegant)',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
